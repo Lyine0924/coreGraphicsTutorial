@@ -8,6 +8,15 @@
 
 import UIKit
 
+private struct Constants {
+    static let cornerRadiusSize = CGSize(width: 8.0, height: 8.0)
+    static let margin: CGFloat = 20.0
+    static let topBorder: CGFloat = 60
+    static let bottomBorder: CGFloat = 50
+    static let colorAlpha: CGFloat = 0.3
+    static let circleDiameter: CGFloat = 5.0
+}
+
 @IBDesignable class GraphView: UIView {
     
     // 1 그라데이션을 위한 시작 색상과 끝 색상을 @IBInspectable속성으로 설정하면 storyboard에서 사용이 가능
@@ -15,6 +24,11 @@ import UIKit
     @IBInspectable var endColor: UIColor = .green
     
     override func draw(_ rect: CGRect) {
+        
+        let path = UIBezierPath(roundedRect: rect,
+                                byRoundingCorners: .allCorners,
+                                cornerRadii: Constants.cornerRadiusSize)
+        path.addClip()
         
         // 2
         let context = UIGraphicsGetCurrentContext()!
