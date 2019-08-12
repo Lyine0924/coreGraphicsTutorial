@@ -23,7 +23,13 @@ private struct Constants {
     @IBInspectable var startColor: UIColor = .red
     @IBInspectable var endColor: UIColor = .green
     
+    // 그래프 x 축을 위한 변수 추가
+    var graphPoints = [4,2,6,4,5,8,3]
+    
     override func draw(_ rect: CGRect) {
+        
+        let width = rect.width
+        let height = rect.height
         
         let path = UIBezierPath(roundedRect: rect,
                                 byRoundingCorners: .allCorners,
@@ -52,5 +58,46 @@ private struct Constants {
                                    start: startPoint,
                                    end: endPoint,
                                    options: [])
+        
+        // calcuate the x point
+        let margin = Constants.margin
+        let graphWidth = width - margin * 2 - 4
+        let colummXPoint = { (colum:Int) -> CGFloat in
+            //calculate the between width
+            let spacing = graphWidth / CGFloat(self.graphPoints.count - 1)
+            return CGFloat(colum) * spacing + margin + 2
+        }
+        
+        // calculate the y point
+        
+        let topBorder = Constants.topBorder
+        let bottomBorder = Constants.bottomBorder
+        let graphHeight = height - topBorder - bottomBorder
+        let maxValue = graphPoints.max()!
+        let columnYPoint = { (graphPoint: Int) -> CGFloat in
+            let y = CGFloat(graphPoint) / CGFloat(maxValue) * graphHeight
+            return graphHeight + topBorder - y // Flip the graph
+        }
+        
+        // draw the line graph
+        
+        UIColor.white.setFill()
+        UIColor.white.setStroke()
+        
+        // set up the points line
+        let graphPath = UIBezierPath()
+        
+        // go to start of line
+        graphPath.move(to: CGPoint(x: colummXPoint(0), y: columnYPoint(graphPoints[0])))
+        
+        // add points for each item in the graphPoints array
+        // at the correct (x, y) for the point
+        for i in 1..<graphPoints.count {
+            let nextPoint = CGPoint(x: colummXPoint(i), y: columnYPoint(graphPoints[i]))
+            graphPath.addLine(to: nextPoint)
+        }
+        
+        //graphPath.stroke()
+        
     }
 }
