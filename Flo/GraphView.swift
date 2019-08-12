@@ -138,5 +138,16 @@ private struct Constants {
         //draw the line on top of the clipped gradient
         graphPath.lineWidth = 2.0
         graphPath.stroke()
+        
+        // MARK = Drawing the Data Points
+        // 계산된 x, y점에 배열의 각 요소의 원 path를 채우기
+        for i in 0..<graphPoints.count{
+            var point = CGPoint(x:colummXPoint(i),y:columnYPoint(graphPoints[i]))
+            point.x -= Constants.circleDiameter / 2
+            point.y -= Constants.circleDiameter / 2
+            
+            let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: Constants.circleDiameter, height: Constants.circleDiameter)))
+            circle.fill()
+        }
     }
 }
