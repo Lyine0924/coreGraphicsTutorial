@@ -99,5 +99,32 @@ private struct Constants {
         
         //graphPath.stroke()
         
+        //Create the clipping path for the graph radient
+        
+        // 1. - save the stata of the context (commented out for now)
+        //context.saveGState()
+        
+        // 2 - make a copy of the path
+        // 표시된 경로를 그라데이션으로 채울 영역을 정의하는 새 경로를 복사함
+        let clippingPath = graphPath.copy() as! UIBezierPath
+        
+        // 3 - add line to the copied path to completed the clip area
+        // 구석의 점 영역으로 완려하고 경로를 닫음 ==> 그래프의 오른,왼쪽 하단이 추가됨
+        clippingPath.addLine(to: CGPoint(x:colummXPoint(graphPoints.count-1),y: height))
+        clippingPath.addLine(to: CGPoint(x:colummXPoint(0),y: height))
+        clippingPath.close()
+        
+        // 4 - add the clipping path to the context
+        //  컨텍스트가 채워졌을 때, 실제로 잘린 경로만 채워짐
+        clippingPath.addClip()
+        
+        // 5 - check clipping path - temporary code
+        // 컨텍스트 채우기 -> rect : draw에 전달된 컨텍스트 영역임
+        UIColor.green.setFill()
+        
+        let rectPath = UIBezierPath(rect: rect)
+        rectPath.fill()
+        // end temporary code
+        
     }
 }
