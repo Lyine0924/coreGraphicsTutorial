@@ -39,8 +39,13 @@ class ViewController: UIViewController {
   @IBOutlet weak var containerView: UIView!
   @IBOutlet weak var graphView: GraphView!
     
-    var isGraphViewShowing = false
-  
+  var isGraphViewShowing = false
+
+    
+  @IBOutlet weak var averageWaterDrunk: UILabel!
+  @IBOutlet weak var maxLabel: UILabel!
+  @IBOutlet weak var stackView: UIStackView!
+    
   @IBAction func pushButtonPressed(_ button: PushButton) {
     if button.isAddButton {
       counterView.counter += 1
@@ -61,15 +66,50 @@ class ViewController: UIViewController {
   }
     
     
-    @IBAction func counterViewTap(_ gesture: UITapGestureRecognizer?){
+  @IBAction func counterViewTap(_ gesture: UITapGestureRecognizer?){
         if (isGraphViewShowing) {
             // hide Graph
             UIView.transition(from: graphView, to: counterView, duration: 1.0, options: [.transitionFlipFromLeft,.showHideTransitionViews], completion: nil)
         } else {
             // show graph
             UIView.transition(from: counterView, to: graphView, duration: 1.0, options: [.transitionFlipFromRight,.showHideTransitionViews], completion: nil)
+            setupGraphDisplay()
         }
         isGraphViewShowing = !isGraphViewShowing
+    }
+    
+    func setupGraphDisplay(){
+        let maxDayIndex = stackView.arrangedSubviews.count - 1
+        
+        // 1 - replace last day with today's actual data
+        // 그래프의 데이터 배열에서 마지막 아이템을 오늘의 데이터로 설정함
+        graphView.graphPoints[graphView.graphPoints.count - 1] = counterView.counter
+        //2 - indicate that the graph needs to be redrawn
+        // 그래프 다시그리기
+        graphView.setNeedsDisplay()
+        maxLabel.text = "\(graphView.graphPoints.max()!)"
+        
+        // 3 - calculate average from graphPoints
+        // reduce 연산을 사용 -> 일주일 동안 취한 평균 잔 수를 계산함
+        let average = graphView.graphPoints.reduce(0, +) / graphView.graphPoints.count
+        averageWaterDrunk.text = "\(average)"
+        
+        // 4 - setup date formatter and calendar
+        let today = Date()
+        let calendar = Calendar.current
+        
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEEEE")
+        
+        // 5 - set up the day name labels with correct days
+        // 스택뷰의 모든 레이블을 거쳐서, date formatter에서 각 레이블의 텍스트를 설정함
+        for i in 0...maxDayIndex {
+            if let date = calendar.date(byAdding: .day, value: -i, to: today),
+                let label = stackView.arrangedSubviews[maxDayIndex - i] as? UILabel {
+                label.text = formatter.string(from: date)
+            }
+        }
+        
     }
     
 }
