@@ -118,6 +118,7 @@ private struct Constants {
         //  컨텍스트가 채워졌을 때, 실제로 잘린 경로만 채워짐
         clippingPath.addClip()
         
+        /*
         // 5 - check clipping path - temporary code
         // 컨텍스트 채우기 -> rect : draw에 전달된 컨텍스트 영역임
         UIColor.green.setFill()
@@ -125,6 +126,17 @@ private struct Constants {
         let rectPath = UIBezierPath(rect: rect)
         rectPath.fill()
         // end temporary code
+        */
         
+        let highestYPoint = columnYPoint(maxValue)
+        let graphStartPoint = CGPoint(x: margin, y: highestYPoint)
+        let graphEndPoint = CGPoint(x: margin, y: bounds.height)
+        
+        context.drawLinearGradient(gradient, start: graphStartPoint, end: graphEndPoint, options: [])
+        //context.restoreGState() //그래프의 표시된 점을 위한 원을 그리고 난 후 주석 처리를 지울 예정임
+        
+        //draw the line on top of the clipped gradient
+        graphPath.lineWidth = 2.0
+        graphPath.stroke()
     }
 }
