@@ -102,7 +102,7 @@ private struct Constants {
         //Create the clipping path for the graph radient
         
         // 1. - save the stata of the context (commented out for now)
-        //context.saveGState()
+        context.saveGState() //원래의 graphics state를 스택으로 푸시함
         
         // 2 - make a copy of the path
         // 표시된 경로를 그라데이션으로 채울 영역을 정의하는 새 경로를 복사함
@@ -133,7 +133,7 @@ private struct Constants {
         let graphEndPoint = CGPoint(x: margin, y: bounds.height)
         
         context.drawLinearGradient(gradient, start: graphStartPoint, end: graphEndPoint, options: [])
-        //context.restoreGState() //그래프의 표시된 점을 위한 원을 그리고 난 후 주석 처리를 지울 예정임
+        context.restoreGState() //원래의 그래픽 상태를 복원 ==> 자르는 경로가 추가되기 이전의 상태
         
         //draw the line on top of the clipped gradient
         graphPath.lineWidth = 2.0
@@ -149,5 +149,28 @@ private struct Constants {
             let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: Constants.circleDiameter, height: Constants.circleDiameter)))
             circle.fill()
         }
+        
+        //Draw horizontal graph lines on the top of everything
+        let linePath = UIBezierPath()
+        
+        // top line
+        linePath.move(to: CGPoint(x:margin, y:topBorder))
+        linePath.addLine(to: CGPoint(x:width - margin,y:topBorder))
+        
+        //center line
+        linePath.move(to: CGPoint(x: margin, y: graphHeight/2 + topBorder))
+        linePath.addLine(to: CGPoint(x: width - margin, y: graphHeight/2 + topBorder))
+        
+        //bottom line
+        linePath.move(to: CGPoint(x: margin, y:height - bottomBorder))
+        linePath.addLine(to: CGPoint(x:  width - margin, y: height - bottomBorder))
+        let color = UIColor(white: 1.0, alpha: Constants.colorAlpha)
+        
+        color.setStroke()
+        
+        linePath.lineWidth = 1.0
+        linePath.stroke()
+        
+        
     }
 }
