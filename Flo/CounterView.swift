@@ -107,5 +107,47 @@ import UIKit
     outlineColor.setStroke()
     outlinePath.lineWidth = Constants.lineWidth
     outlinePath.stroke()
+    
+    //Counter View markers
+    let context = UIGraphicsGetCurrentContext()!
+    
+    //1 - save original state
+    // 컨텍스트 행렬을 다루기 전, 행렬의 원래 상태를 저장함.
+    context.saveGState()
+    outlineColor.setFill()
+    
+    let markerWidth: CGFloat = 5.0
+    let markerSize: CGFloat = 10.0
+    
+    //2 - the marker rectangle positioned at the top left
+    // 경로의 위치와 모양을 정의함 , 아직 그리지 않은 상태
+    let markerPath = UIBezierPath(rect: CGRect(x: -markerWidth / 2, y: 0, width: markerWidth, height: markerSize))
+    
+    //3 - move top left of context to the previous center position
+    // 컨텍스트의 원래 중심에서 회전이 발생하도록 컨텍스트를 이동함
+    context.translateBy(x: rect.width / 2, y: rect.height / 2)
+    
+    for i in 1...Constants.numberOfGlasses {
+        //4 - save the centred context
+        // 각 마커를 위해 중심이 있는 컨텍스트의 상태를 저장함
+        context.saveGState()
+        //5 - calculate the rotation angle
+        // 이전에 계산된 각각의 각도를 사용, 각 마커의 각도를 결정 -> 컨텍스트를 회전 및 변환
+        let angle = arcLengthPerGlass * CGFloat(i) + startAngle - .pi / 2
+        //rotate and translate
+        context.rotate(by: angle)
+        context.translateBy(x: 0, y: rect.height / 2 - markerSize)
+        
+        //6 - fill the marker rectangle
+        // 회전, 변환된 컨텍스트의 왼쪽 상단에 사각형 마커를 그리기
+        markerPath.fill()
+        //7 - restore the centred context for the next rotate
+        // 중앙이 있는 컨텍스트의 상태로 복원함
+        context.restoreGState()
+    }
+    
+    //8 - restore the original state in case of more painting
+    // 회전하거나 변환되지 않은 컨텍스트의 원래 상태를 복원함
+    context.restoreGState()
   }
 }
