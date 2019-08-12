@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E670B1322FD5C0F00AF6915 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E670B1222FD5C0F00AF6915 /* GraphView.swift */; };
+		3EFFD4292300F913001617AD /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFFD4282300F913001617AD /* BackgroundView.swift */; };
 		437AE1E61F02685B001EE6E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AE1E51F02685B001EE6E4 /* AppDelegate.swift */; };
 		437AE1E81F02685B001EE6E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AE1E71F02685B001EE6E4 /* ViewController.swift */; };
 		437AE1EB1F02685B001EE6E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 437AE1E91F02685B001EE6E4 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		3E670B1222FD5C0F00AF6915 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		3EFFD4282300F913001617AD /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BackgroundView.swift; path = "../../../../../myeongsoo-Linne/Lemonhc/ws/coreGraphicsTutorial/Flo/BackgroundView.swift"; sourceTree = "<group>"; };
 		437AE1E21F02685B001EE6E4 /* Flo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		437AE1E51F02685B001EE6E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		437AE1E71F02685B001EE6E4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				437AE1EE1F02685B001EE6E4 /* LaunchScreen.storyboard */,
 				437AE1F11F02685B001EE6E4 /* Info.plist */,
 				3E670B1222FD5C0F00AF6915 /* GraphView.swift */,
+				3EFFD4282300F913001617AD /* BackgroundView.swift */,
 			);
 			path = Flo;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EFFD4292300F913001617AD /* BackgroundView.swift in Sources */,
 				3E670B1322FD5C0F00AF6915 /* GraphView.swift in Sources */,
 				437AE1E81F02685B001EE6E4 /* ViewController.swift in Sources */,
 				437AE1E61F02685B001EE6E4 /* AppDelegate.swift in Sources */,
